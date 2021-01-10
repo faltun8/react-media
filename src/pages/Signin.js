@@ -1,53 +1,45 @@
-import React from "react";
+import React from 'react'
 import {
-  Button,
-  TextField,
-  Grid,
-  Container,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { useFormik } from "formik";
-import firebase from "../firebase/firebase.utils";
+    Button,
+    TextField,
+    Grid,
+    Container,
+  } from "@material-ui/core";
+  import { makeStyles } from "@material-ui/core/styles";
+  import { useFormik } from "formik";
+  import firebase from "../firebase/firebase.utils";
 
-const styles = makeStyles({
-  wrapper: {
-    marginTop: "5rem",
-  },
-});
-
-function Signup() {
-  const signupStyles = styles();
-
-  const formik = useFormik({
-    initialValues: {
-      displayName: "",
-      email: "",
-      password: "",
-    },
-    onSubmit: (values) => {
-      firebase.register(values.displayName, values.email, values.password);
+  const styles = makeStyles({
+    wrapper: {
+      marginTop: "5rem",
     },
   });
 
-  const handleGoogleButtonClick = () => {
-    firebase.useGoogleProvider();
-  }
+  function Signin() {
+    const signinStyles = styles();
+  
+    const formik = useFormik({
+      initialValues: {
+        displayName: "",
+        email: "",
+        password: "",
+      },
+      onSubmit: (values) => {
+        firebase.signIn(values.displayName, values.email, values.password)
+       
+      },
+    });
+
+    const handleGoogleButtonClick = () => {
+        firebase.useGoogleProvider();
+      }
+  
+
 
   return (
-    <Container className={signupStyles.wrapper} maxWidth="sm">
+    <Container className={signinStyles.wrapper} maxWidth="sm">
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <TextField
-              name="displayName"
-              id="outlined-basic"
-              label="Display Name"
-              variant="outlined"
-              fullWidth
-              value={formik.values.displayName}
-              onChange={formik.handleChange}
-            />
-          </Grid>
           <Grid item xs={12}>
             <TextField
               name="email"
@@ -105,4 +97,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Signin;

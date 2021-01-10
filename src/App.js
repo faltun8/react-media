@@ -1,12 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-import Signup from "./pages/Signup"
+import AppRouter from "./router/Router"
+import AuthContextProvider from './context/AuthContext'
 
 function App() {
+
   return (
-    <div className="App">
-      <Signup/>
-    </div>
+    <AuthContextProvider>
+      <AppRouter/>
+    </AuthContextProvider>
   );
 }
 
