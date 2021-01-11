@@ -8,6 +8,14 @@ import {
   import { makeStyles } from "@material-ui/core/styles";
   import { useFormik } from "formik";
   import firebase from "../firebase/firebase.utils";
+  import * as Yup from "yup";
+
+  const signInValidationSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Email is required!!!"),
+    password: Yup.string()
+    .required("Password is required!!!")
+    .min(8, "Password is too short - should be atlest 8 chars"),
+  })
 
   const styles = makeStyles({
     wrapper: {
@@ -24,6 +32,7 @@ import {
         email: "",
         password: "",
       },
+      validationSchema: signInValidationSchema,
       onSubmit: (values) => {
         firebase.signIn(values.displayName, values.email, values.password)
        
@@ -49,6 +58,8 @@ import {
               fullWidth
               value={formik.values.email}
               onChange={formik.handleChange}
+              error={formik.errors.email}
+              helperText={formik.errors.email}
             />
           </Grid>
           <Grid item xs={12}>
@@ -61,6 +72,8 @@ import {
               fullWidth
               value={formik.values.password}
               onChange={formik.handleChange}
+              error={formik.errors.password}
+              helperText={formik.errors.password}
             />
           </Grid>
           <Grid item xs={12}>
