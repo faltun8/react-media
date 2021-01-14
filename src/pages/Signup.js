@@ -4,11 +4,14 @@ import {
   TextField,
   Grid,
   Container,
+  Avatar,
+  Typography
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useFormik } from "formik";
 import firebase from "../firebase/firebase.utils";
 import * as Yup from "yup";
+import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 const signUpValidationSchema = Yup.object().shape({
   displayName: Yup.string().required("Display name is required!!!"),
@@ -18,14 +21,22 @@ const signUpValidationSchema = Yup.object().shape({
   .min(8, "Password is too short - should be atleast 8 chars."),
 })
 
-const styles = makeStyles({
+const stylesFunc = makeStyles((theme) => ({
   wrapper: {
     marginTop: "5rem",
+    textAlign: "center",
   },
-});
+  avatar: {
+    margin: "1rem auto",
+    backgroundColor: theme.palette.secondary.main,
+  },
+  label: {
+    padding: "5rem",
+  }
+}));
 
 function Signup() {
-  const signupStyles = styles();
+  const signupStyles = stylesFunc();
 
   const formik = useFormik({
     initialValues: {
@@ -45,6 +56,12 @@ function Signup() {
 
   return (
     <Container className={signupStyles.wrapper} maxWidth="sm">
+       <Avatar className={signupStyles.avatar}>
+        <AssignmentTurnedInIcon/>
+      </Avatar>
+      <Typography variant="h4" >
+        <p calssName={signupStyles.label}>Register</p>
+      </Typography>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
