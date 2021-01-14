@@ -4,11 +4,15 @@ import {
     TextField,
     Grid,
     Container,
+    Avatar,
+    Typography
   } from "@material-ui/core";
   import { makeStyles } from "@material-ui/core/styles";
   import { useFormik } from "formik";
   import firebase from "../firebase/firebase.utils";
   import * as Yup from "yup";
+  import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
+import { grey } from '@material-ui/core/colors';
 
   const signInValidationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required!!!"),
@@ -17,14 +21,22 @@ import {
     .min(8, "Password is too short - should be atlest 8 chars"),
   })
 
-  const styles = makeStyles({
+  const stylesFunc = makeStyles((theme) => ({
     wrapper: {
       marginTop: "5rem",
+      textAlign: "center",
     },
-  });
+    avatar: {
+      margin: "1rem auto",
+      backgroundColor: theme.palette.secondary.main,
+    },
+    label: {
+      padding: "5rem",
+    }
+  }));
 
   function Signin() {
-    const signinStyles = styles();
+    const signinStyles = stylesFunc();
   
     const formik = useFormik({
       initialValues: {
@@ -47,6 +59,12 @@ import {
 
   return (
     <Container className={signinStyles.wrapper} maxWidth="sm">
+      <Avatar className={signinStyles.avatar}>
+        <LockOutlinedIcon/>
+      </Avatar>
+      <Typography variant="h4" >
+        <p calssName={signinStyles.label}>Sign In</p>
+      </Typography>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
