@@ -34,7 +34,7 @@ function Main() {
        <Grid container spacing={5}>
       {userList?.map((user) => {
         return (
-        <Grid item sm={4} xs={6} key={user?.id}>
+        <Grid item sm={4} xs={12} key={user?.id}>
           <MediaCard
             id={user?.id}
             userImage={user?.picture}
