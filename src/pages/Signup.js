@@ -13,6 +13,7 @@ import firebase from "../firebase/firebase.utils";
 import * as Yup from "yup";
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 
+
 const signUpValidationSchema = Yup.object().shape({
   displayName: Yup.string().required("Display name is required!!!"),
   email: Yup.string().email("Invalid email").required("Email is required!!!"),
@@ -30,13 +31,12 @@ const stylesFunc = makeStyles((theme) => ({
     margin: "1rem auto",
     backgroundColor: theme.palette.secondary.main,
   },
-  label: {
-    padding: "5rem",
-  }
+  
 }));
 
 function Signup() {
   const signupStyles = stylesFunc();
+
 
   const formik = useFormik({
     initialValues: {
@@ -45,13 +45,15 @@ function Signup() {
       password: "",
     },
     validationSchema: signUpValidationSchema,
-    onSubmit: (values) => {
-      firebase.register(values.displayName, values.email, values.password);
+    onSubmit: async (values) => {
+      await firebase.register(values.displayName, values.email, values.password)
+      .then(() => window.location.href = "/")
     },
   });
 
   const handleGoogleButtonClick = () => {
     firebase.useGoogleProvider();
+    
   }
 
   return (
@@ -60,14 +62,14 @@ function Signup() {
         <AssignmentTurnedInIcon/>
       </Avatar>
       <Typography variant="h4" >
-        <p calssName={signupStyles.label}>Register</p>
+        <p>Register</p>
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
               name="displayName"
-              id="outlined-basic"
+              id="outlined-basic-display-name"
               label="Display Name"
               variant="outlined"
               fullWidth
@@ -81,7 +83,7 @@ function Signup() {
           <Grid item xs={12}>
             <TextField
               name="email"
-              id="outlined-basic"
+              id="outlined-basic-email"
               label="Email"
               variant="outlined"
               fullWidth
@@ -94,7 +96,7 @@ function Signup() {
           <Grid item xs={12}>
             <TextField
               name="password"
-              id="outlined-basic"
+              id="outlined-basic-password"
               label="Password"
               variant="outlined"
               type="password"

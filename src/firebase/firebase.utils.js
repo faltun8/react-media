@@ -42,8 +42,14 @@ class Firebase {
       this.firebaseAuth.signInWithPopup(googleProvider);
     }
 
-    signIn(displayName, email, password) {
-      this.firebaseAuth.signInWithEmailAndPassword(email, password);
+  
+
+    async signIn(displayName, email, password) {
+      try {
+        await this.firebaseAuth.signInWithEmailAndPassword(email, password);
+      } catch (err) {
+        console.log("F. Error:", err)
+      }
     }
 
     signOut() {
