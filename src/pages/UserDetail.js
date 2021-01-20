@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { capitalize, Avatar } from "@material-ui/core";
+import { Container, CircularProgress } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
@@ -16,6 +16,12 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import PhoneIcon from "@material-ui/icons/Phone";
 
 const useStyles = makeStyles({
+  wrapper: {
+    alignItems: "center",
+    alignContent: "center",
+    margin: "auto",
+    padding: "auto",
+  },
   root: {
     marginLeft: "auto",
     marginRight: "auto",
@@ -50,6 +56,13 @@ const useStyles = makeStyles({
     marginRight: 5,
     paddingTop: 1,
   },
+  circular: {
+    marginTop: 300,
+    marginBottom: 300,
+    marginLeft: "auto",
+    marginRight: "auto",
+    maxWidth: 50,
+  }
 });
 
 function UserDetail() {
@@ -59,7 +72,10 @@ function UserDetail() {
   const [userDetail, setUserDetail] = useState();
 
   useEffect(() => {
-    fetchData(`/user/${id}`).then((res) => setUserDetail(res));
+    fetchData(`/user/${id}`)
+    .then((res) => setUserDetail(res))
+    .catch()
+    .finally();
     console.log(userDetail);
   }, []);
 
@@ -69,7 +85,15 @@ function UserDetail() {
   const phone = `${userDetail?.phone}`;
 
   return (
-    <Card className={classes.root}>
+   
+    <Container className={classes.wrapper}>
+       {!userDetail ? (
+       <div className={classes.circular}>
+        <CircularProgress  color="secondary"/>
+       </div>
+      
+    ):(
+      <Card className={classes.root}>
       <CardMedia
         className={classes.media}
         image={userDetail?.picture}
@@ -127,6 +151,9 @@ function UserDetail() {
         </Typography>
       </CardContent>
     </Card>
+    )}
+    </Container>
+    
   );
 }
 
