@@ -9,18 +9,18 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { FirebaseAuthContext } from "../context/AuthContext";
-import firebase from '../firebase/firebase.utils'
+import firebase from "../firebase/firebase.utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
 
-    textAlign:'center',
-    position:'fixed',
-    left:0,
-    top:0,
-    right:0,
-    zIndex:10,
+   
+    position: "fixed",
+    left: 0,
+    top: 0,
+    right: 0,
+    zIndex: 10,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -28,11 +28,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  accountIcon: {
+    marginLeft: 10,
+  }
 }));
 
-export default function Navbar() {
+export default function Navbar(props) {
   const { currentUser } = useContext(FirebaseAuthContext);
-  console.log("currentuser",currentUser)
+  console.log("currentuser", currentUser);
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -47,7 +50,7 @@ export default function Navbar() {
 
   const handleSignOut = useCallback(() => {
     firebase.signOut();
-  }, [])
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -74,7 +77,7 @@ export default function Navbar() {
                 color="inherit"
               >
                 {currentUser?.displayName}
-                <AccountCircle />
+                <AccountCircle className={classes.accountIcon} />
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -97,6 +100,28 @@ export default function Navbar() {
               </Menu>
             </div>
           )}
+
+          <MenuItem
+            onClick={() => {
+              window.location.href = "/";
+            }}
+          >
+            Home
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              window.location.href = "/login";
+            }}
+          >
+            Sign in
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              window.location.href = "/register";
+            }}
+          >
+            Sign up
+          </MenuItem>
         </Toolbar>
       </AppBar>
     </div>

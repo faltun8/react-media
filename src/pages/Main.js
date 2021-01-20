@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "@material-ui/core";
+import { Container, Grid, capitalize } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import MediaCard from "../components/MediaCard";
@@ -22,19 +22,29 @@ function Main() {
         "app-id": REACT_APP_API_TOKEN,
       },
     });
-    setUserList(response?.data.data);
+    return response
   };
 
   useEffect(() => {
-    fetchData();
-    console.log(userList);
+    fetchData().then((res) => setUserList(res?.data.data));
   }, []);
 
   return (
-    <Container className={mainStyles.wrapper} maxWidth="sm">
+    <Container className={mainStyles.wrapper}>
+       <Grid container spacing={5}>
       {userList?.map((user) => {
-        return <MediaCard key={user?.id} userImage={user.picture} userName={`${user.title} ${user.firstName} ${user.lastName}`} />;
+        return (
+        <Grid item sm={4} xs={6} key={user?.id}>
+          <MediaCard
+            id={user?.id}
+            userImage={user?.picture}
+            userName={`${capitalize(user?.title)} ${user?.firstName} ${user?.lastName}`}
+            userEmail={user?.email}
+          />
+        </Grid>
+        )
       })}
+      </Grid>
     </Container>
   );
 }

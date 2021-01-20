@@ -12,7 +12,7 @@ import {
   import firebase from "../firebase/firebase.utils";
   import * as Yup from "yup";
   import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
-import { grey } from '@material-ui/core/colors';
+
 
   const signInValidationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required!!!"),
@@ -30,9 +30,6 @@ import { grey } from '@material-ui/core/colors';
       margin: "1rem auto",
       backgroundColor: theme.palette.secondary.main,
     },
-    label: {
-      padding: "5rem",
-    }
   }));
 
   function Signin() {
@@ -45,9 +42,9 @@ import { grey } from '@material-ui/core/colors';
         password: "",
       },
       validationSchema: signInValidationSchema,
-      onSubmit: (values) => {
-        firebase.signIn(values.displayName, values.email, values.password)
-       
+      onSubmit: async (values) => {
+        await firebase.signIn(values.displayName, values.email, values.password)
+        .then(() =>window.location.href = "/")
       },
     });
 
@@ -63,7 +60,7 @@ import { grey } from '@material-ui/core/colors';
         <LockOutlinedIcon/>
       </Avatar>
       <Typography variant="h4" >
-        <p calssName={signinStyles.label}>Sign In</p>
+        <p>Sign In</p>
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={3}>
