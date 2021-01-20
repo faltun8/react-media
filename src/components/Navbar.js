@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 10,
   },
   appBar: {
+
     height: 70,
+
   },
   displayName: {
     fontSize: 18,
@@ -44,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accountIcon: {
     marginLeft: 10,
+
     borderRadius: 10,
     boxShadow: "1px 10px 50px 1px rgba(0,0,0,0.5)",
     "&:hover": {
@@ -68,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
   menuItemWrapper: {
     display: "flex",
     flexDirection: 'colomn',
+
   }
 }));
 
@@ -108,6 +112,7 @@ export default function Navbar(props) {
     <div className={classes.root}>
       <AppBar className={classes.appBar} position="static" color="secondary">
         <Toolbar>
+
           {
             <IconButton
               edge="start"
@@ -119,6 +124,7 @@ export default function Navbar(props) {
               <HomeIcon />
             </IconButton>
           }
+
           <Typography variant="h6" className={classes.title}>
             React Media
           </Typography>
@@ -131,9 +137,11 @@ export default function Navbar(props) {
                 onClick={handleMenu}
                 color="inherit"
               >
+
                 <p className={classes.displayName}>
                   {currentUser?.displayName}
                 </p>
+
                 <AccountCircle className={classes.accountIcon} />
               </IconButton>
               <Menu
@@ -178,6 +186,8 @@ export default function Navbar(props) {
               </MenuItem>
             </div>
           )}
+
+
         </Toolbar>
       </AppBar>
     </div>
