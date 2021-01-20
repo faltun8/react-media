@@ -14,13 +14,17 @@ import firebase from "../firebase/firebase.utils";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-
-   
     position: "fixed",
     left: 0,
     top: 0,
     right: 0,
     zIndex: 10,
+  },
+  appBar: {
+    height:70,
+  },
+  displayName: {
+    fontSize: 18,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -30,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
   },
   accountIcon: {
     marginLeft: 10,
+  },
+  menuItem: {
+    fontSize: "17",
+    padding:5,
+    overflow: "visible",
   }
 }));
 
@@ -54,16 +63,16 @@ export default function Navbar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="secondary">
+      <AppBar className={classes.appBar} position="static" color="secondary">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h6" className={classes.title}>
             React Media
           </Typography>
@@ -76,7 +85,7 @@ export default function Navbar(props) {
                 onClick={handleMenu}
                 color="inherit"
               >
-                {currentUser?.displayName}
+                <p className={classes.displayName}>{currentUser?.displayName}</p>
                 <AccountCircle className={classes.accountIcon} />
               </IconButton>
               <Menu
@@ -102,13 +111,15 @@ export default function Navbar(props) {
           )}
 
           <MenuItem
+            className={classes.menuItem} 
             onClick={() => {
               window.location.href = "/";
             }}
           >
             Home
           </MenuItem>
-          <MenuItem
+          <MenuItem 
+            className={classes.menuItem} 
             onClick={() => {
               window.location.href = "/login";
             }}
@@ -116,6 +127,7 @@ export default function Navbar(props) {
             Sign in
           </MenuItem>
           <MenuItem
+            className={classes.menuItem} 
             onClick={() => {
               window.location.href = "/register";
             }}
