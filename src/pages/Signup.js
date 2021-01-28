@@ -5,22 +5,21 @@ import {
   Grid,
   Container,
   Avatar,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useFormik } from "formik";
 import firebase from "../firebase/firebase.utils";
 import * as Yup from "yup";
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-
+import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
 
 const signUpValidationSchema = Yup.object().shape({
   displayName: Yup.string().required("Display name is required!!!"),
   email: Yup.string().email("Invalid email").required("Email is required!!!"),
   password: Yup.string()
-  .required("No password provided.")
-  .min(8, "Password is too short - should be atleast 8 chars."),
-})
+    .required("No password provided.")
+    .min(8, "Password is too short - should be atleast 8 chars."),
+});
 
 const stylesFunc = makeStyles((theme) => ({
   wrapper: {
@@ -31,12 +30,10 @@ const stylesFunc = makeStyles((theme) => ({
     margin: "1rem auto",
     backgroundColor: theme.palette.secondary.main,
   },
-  
 }));
 
 function Signup() {
   const signupStyles = stylesFunc();
-
 
   const formik = useFormik({
     initialValues: {
@@ -45,23 +42,21 @@ function Signup() {
       password: "",
     },
     validationSchema: signUpValidationSchema,
-    onSubmit: async (values) => {
-      await firebase.register(values.displayName, values.email, values.password)
-      .then(() => window.location.href = "/")
+    onSubmit: (values) => {
+      firebase.register(values.displayName, values.email, values.password);
     },
   });
 
   const handleGoogleButtonClick = () => {
     firebase.useGoogleProvider();
-    
-  }
+  };
 
   return (
     <Container className={signupStyles.wrapper} maxWidth="sm">
-       <Avatar className={signupStyles.avatar}>
-        <AssignmentTurnedInIcon/>
+      <Avatar className={signupStyles.avatar}>
+        <AssignmentTurnedInIcon />
       </Avatar>
-      <Typography variant="h4" >
+      <Typography variant="h4">
         <p>Register</p>
       </Typography>
       <form onSubmit={formik.handleSubmit}>
@@ -77,7 +72,6 @@ function Signup() {
               onChange={formik.handleChange}
               error={formik.errors.displayName}
               helperText={formik.errors.displayName}
-
             />
           </Grid>
           <Grid item xs={12}>
@@ -122,9 +116,19 @@ function Signup() {
               variant="contained"
               color="secondary"
               fullWidth
-              onClick={ handleGoogleButtonClick }
+              onClick={handleGoogleButtonClick}
             >
               SIGN UP WITH GOOGLE
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="secondary"
+              fullWidth
+              onClick={() => window.location.href = "/LOGIN"}
+            >
+              I'VE ALREADY REGISTERED
             </Button>
           </Grid>
         </Grid>

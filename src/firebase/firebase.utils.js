@@ -20,41 +20,64 @@ const config = process.env.NODE_ENV === "development" ? devConfig : prodConfig;
 //firebase.initializeApp(config)
 
 class Firebase {
-    constructor() {
-        firebase.initializeApp(config);
-        this.firebaseAuth = firebase.auth();
-    }
+  constructor() {
+    firebase.initializeApp(config);
+    this.firebaseAuth = firebase.auth();
+  }
 
-    async register(displayName, email, password) {
-      try {
-        await this.firebaseAuth.createUserWithEmailAndPassword(email, password);
+  async register(displayName, email, password) {
+    try {
+      await this.firebaseAuth.createUserWithEmailAndPassword(email, password);
       this.firebaseAuth.currentUser.updateProfile({
         displayName,
-      })
-      } catch (err) {
-        console.log("F. Error:", err)
-      }
+      });
+    } catch (err) {
+      console.log("F. Error:", err);
+    } finally {
+      window.location.href = "/";
     }
+  }
 
-    useGoogleProvider() {
+  async useGoogleProvider() {
+    try {
       const googleProvider = new firebase.auth.GoogleAuthProvider();
-      googleProvider.setCustomParameters({ prompt: "select_account"})
-      this.firebaseAuth.signInWithPopup(googleProvider);
+      googleProvider.setCustomParameters({ prompt: "select_account" });
+      await this.firebaseAuth.signInWithPopup(googleProvider);
+    } catch (err) {
+      console.log("F. Error:", err);
+    } finally {
+      window.location.href = "/";
     }
+  }
 
-  
-
-    async signIn(displayName, email, password) {
-      try {
-        await this.firebaseAuth.signInWithEmailAndPassword(email, password);
-      } catch (err) {
-        console.log("F. Error:", err)
-      }
+  async signIn(displayName, email, password) {
+    try {
+      await this.firebaseAuth.signInWithEmailAndPassword(email, password);
+    } catch (err) {
+      console.log("F. Error:", err);
+    } finally {
+      window.location.href = "/";
     }
+  }
 
-    signOut() {
-      this.firebaseAuth.signOut();
+  async signOut() {
+    try {
+      await this.firebaseAuth.signOut();;
+    } catch (err) {
+      console.log("F. Error:", err);
+    } finally {
+      window.location.href = "/login";
     }
+  }
+
+  async forgotPassword(email) {
+    try {
+      await this.firebaseAuth.sendPasswordResetEmail(email);
+    } catch (err) {
+      console.log("F. Error:", err);
+    }
+  }
+
 }
 
 export default new Firebase();
