@@ -55,7 +55,7 @@ export default function MediaCard({userImage, userName, userEmail, id}) {
         <Button size="small" color="primary" onClick={()=> history.push(`/user/${id}`)}>
           View Full Profile
         </Button>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={()=> history.push(`/user/${id}/post`)}>
           View User Posts
         </Button>
       </CardActions>

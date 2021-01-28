@@ -2,11 +2,8 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, CircularProgress } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -41,8 +38,6 @@ const useStyles = makeStyles({
   content: {
     width: 500,
     margin: "auto",
-    //backgroundColor: 'wheat',
-
     borderRadius: 10,
     boxShadow: "0px 2px 3px 3px rgba(0,0,0,0.1)",
     marginBottom: 50,
@@ -97,7 +92,7 @@ function UserDetail() {
       <CardMedia
         className={classes.media}
         image={userDetail?.picture}
-        title="Contemplative Reptile"
+        
       />
       <CardContent className={classes.content}>
         <Typography gutterBottom variant="h5" component="h2">

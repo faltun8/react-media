@@ -1,65 +1,61 @@
-import React from 'react'
+import React from "react";
 import {
-    Button,
-    TextField,
-    Grid,
-    Container,
-    Avatar,
-    Typography
-  } from "@material-ui/core";
-  import { makeStyles } from "@material-ui/core/styles";
-  import { useFormik } from "formik";
-  import firebase from "../firebase/firebase.utils";
-  import * as Yup from "yup";
-  import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
+  Button,
+  TextField,
+  Grid,
+  Container,
+  Avatar,
+  Typography,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { useFormik } from "formik";
+import firebase from "../firebase/firebase.utils";
+import * as Yup from "yup";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
-
-  const signInValidationSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required!!!"),
-    password: Yup.string()
+const signInValidationSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is required!!!"),
+  password: Yup.string()
     .required("Password is required!!!")
     .min(8, "Password is too short - should be atlest 8 chars"),
-  })
+});
 
-  const stylesFunc = makeStyles((theme) => ({
-    wrapper: {
-      marginTop: "5rem",
-      textAlign: "center",
+const stylesFunc = makeStyles((theme) => ({
+  wrapper: {
+    marginTop: "5rem",
+    textAlign: "center",
+  },
+  avatar: {
+    margin: "1rem auto",
+    backgroundColor: theme.palette.secondary.main,
+  },
+}));
+
+function Signin() {
+  const signinStyles = stylesFunc();
+
+  const formik = useFormik({
+    initialValues: {
+      displayName: "",
+      email: "",
+      password: "",
     },
-    avatar: {
-      margin: "1rem auto",
-      backgroundColor: theme.palette.secondary.main,
+    validationSchema: signInValidationSchema,
+    onSubmit: (values) => {
+      firebase.signIn(values.displayName, values.email, values.password);
     },
-  }));
+  });
 
-  function Signin() {
-    const signinStyles = stylesFunc();
-  
-    const formik = useFormik({
-      initialValues: {
-        displayName: "",
-        email: "",
-        password: "",
-      },
-      validationSchema: signInValidationSchema,
-      onSubmit: async (values) => {
-        await firebase.signIn(values.displayName, values.email, values.password)
-        .then(() =>window.location.href = "/")
-      },
-    });
-
-    const handleGoogleButtonClick = () => {
-        firebase.useGoogleProvider();
-      }
-  
-
+  const handleGoogleButtonClick = () => {
+    firebase.useGoogleProvider();
+  };
 
   return (
     <Container className={signinStyles.wrapper} maxWidth="sm">
       <Avatar className={signinStyles.avatar}>
-        <LockOutlinedIcon/>
+        <LockOutlinedIcon />
       </Avatar>
-      <Typography variant="h4" >
+      <Typography variant="h4">
         <p>Sign In</p>
       </Typography>
       <form onSubmit={formik.handleSubmit}>
@@ -106,9 +102,19 @@ import {
               variant="contained"
               color="secondary"
               fullWidth
-              onClick={ handleGoogleButtonClick }
+              onClick={handleGoogleButtonClick}
             >
               SIGN UP WITH GOOGLE
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="secondary"
+              fullWidth
+              onClick={() => window.location.href = "/forgot-password"}
+            >
+              FORGET PASSWORD
             </Button>
           </Grid>
         </Grid>

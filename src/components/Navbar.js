@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuItemWrapper: {
     display: "flex",
-    flexDirection: 'colomn',
+    flexDirection: 'colomn'
   }
 }));
 
@@ -122,7 +122,7 @@ export default function Navbar(props) {
           <Typography variant="h6" className={classes.title}>
             React Media
           </Typography>
-          {auth && (
+          {auth ? (
             <div>
               <IconButton
                 aria-label="account of current user"
@@ -156,9 +156,7 @@ export default function Navbar(props) {
                 <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
               </Menu>
             </div>
-          )}
-
-          {!auth && (
+          ) : (
             <div className={classes.menuItemWrapper}>
               <MenuItem
                 className={classes.menuItem}
