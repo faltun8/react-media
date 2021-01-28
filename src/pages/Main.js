@@ -43,6 +43,7 @@ function Main() {
 
   return (
     <Container className={mainStyles.wrapper}>
+
       {!userList ? (
         <div className={mainStyles.circular}>
           <CircularProgress color="secondary" />
@@ -63,6 +64,7 @@ function Main() {
               </Grid>
             );
           })}
+
         </Grid>
       )}
     </Container>
